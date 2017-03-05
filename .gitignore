@@ -33,5 +33,6 @@
 *.exe
 *.out
 *.app
+*.json
 
 # End of https://www.gitignore.io/api/c++
