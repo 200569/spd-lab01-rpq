@@ -47,7 +47,7 @@ int main(){
         myfile.close();
     }else cout << "Unable to open file"; 
     // obsluga algorytmu, czyli petle zamieniajace kolejnosc dzialan
-
+    
     // wyswietlenie kolejnosci:
     cout << endl<<"Wyliczona kolejnosc: ";
     for (int i = 0; i<=LiczbaZadan; i++){
