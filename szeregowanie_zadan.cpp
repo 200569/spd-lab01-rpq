@@ -125,6 +125,7 @@ int main(){
     // wyswietlenie kolejnosci:
     cout << endl<<"Wyliczona kolejnosc: ";
     for (unsigned int i = 0; i < LiczbaZadan; i++){
+        //cout << TabZadan[i];
         cout << TabZadan[i].kolejnosc << " ";
     }
     cout << endl;
