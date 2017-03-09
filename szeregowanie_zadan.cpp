@@ -4,22 +4,35 @@
 
 using namespace std;
 
-class Zadanie {
-    public:
+int iIndexZadan = 0;
+
+struct Zadanie {
+        int kolejnosc;//kolejnosc zadania
         int r;//czas przygotowania
         int p;//czas na maszynie
         int q;//czas stygniecia
+        /*Zadanie(){r = p = q = kolejnosc = 0;}
+        void Zapisz(int kol, int er, int pe, int qu) {
+            kolejnosc = kol;
+            r = er;
+            p = pe;
+            q = qu;
+        }*/
 };
+Zadanie TabZadan[60]; //deklaracja tablicy zadan
+
 istream& operator>> (istream& wejscie, Zadanie& zad){
-        wejscie >> zad.r >> zad.p >> zad.q;
-        return wejscie;
+    zad.kolejnosc = ++iIndexZadan;
+    wejscie >> zad.r >> zad.p >> zad.q;
+    return wejscie;
 }
 ostream& operator<< (ostream& wyjscie, const Zadanie& zad){
     cout << zad.r << " - " << zad.p << " - " << zad.q << endl; 
-        return wyjscie;
+    return wyjscie;
 }
+
 int main(){
-    int LiczbaZadan, index=0;
+    int LiczbaZadan = 0, index = 0;
     bool xFirst=1;
     string line, filename;
 
@@ -36,7 +49,6 @@ int main(){
                 cout << "Liczba zadan: " << LiczbaZadan<<"\n";
                 xFirst = 0;
             }else{
-                Zadanie TabZadan[LiczbaZadan];
                 dane >> TabZadan[index]; //wgranie danych do tablicy struktur
                 cout << TabZadan[index]; //wyswietlenie danych
                 index++;
@@ -44,7 +56,14 @@ int main(){
         }   
         myfile.close();
     }else cout << "Unable to open file"; 
+    // obsluga algorytmu, czyli petle zamieniajace kolejnosc dzialan
     
-
-  return 0;
+    // wyswietlenie kolejnosci:
+    cout << endl<<"Wyliczona kolejnosc: ";
+    for (int i = 0; i<LiczbaZadan; i++){
+        cout << TabZadan[i].kolejnosc << " ";
+    }
+    cout << endl;
+    
+    return 0;
 }
