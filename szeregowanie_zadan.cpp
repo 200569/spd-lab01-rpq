@@ -3,14 +3,24 @@
 #include <sstream>
 
 using namespace std;
+
 int iIndexZadan = 0;
+
 struct Zadanie {
-    int kolejnosc;//kolejnosc zadania
-    int r;//czas przygotowania
-    int p;//czas na maszynie
-    int q;//czas stygniecia
+        int kolejnosc;//kolejnosc zadania
+        int r;//czas przygotowania
+        int p;//czas na maszynie
+        int q;//czas stygniecia
+        /*Zadanie(){r = p = q = kolejnosc = 0;}
+        void Zapisz(int kol, int er, int pe, int qu) {
+            kolejnosc = kol;
+            r = er;
+            p = pe;
+            q = qu;
+        }*/
 };
 Zadanie TabZadan[60]; //deklaracja tablicy zadan
+
 istream& operator>> (istream& wejscie, Zadanie& zad){
     zad.kolejnosc = ++iIndexZadan;
     wejscie >> zad.r >> zad.p >> zad.q;
@@ -22,7 +32,7 @@ ostream& operator<< (ostream& wyjscie, const Zadanie& zad){
 }
 
 int main(){
-    int LiczbaZadan, index=0;
+    int LiczbaZadan = 0, index = 0;
     bool xFirst=1;
     string line, filename;
 
@@ -50,7 +60,7 @@ int main(){
     
     // wyswietlenie kolejnosci:
     cout << endl<<"Wyliczona kolejnosc: ";
-    for (int i = 0; i<=LiczbaZadan; i++){
+    for (int i = 0; i<LiczbaZadan; i++){
         cout << TabZadan[i].kolejnosc << " ";
     }
     cout << endl;
