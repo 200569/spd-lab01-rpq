@@ -12,7 +12,21 @@ struct Zadanie {
         int p;//czas na maszynie
         int q;//czas stygniecia
 };
-Zadanie TabZadan[60]; //deklaracja tablicy zadan
+Zadanie TabZadan[100]; //deklaracja tablicy zadan
+int kolejnosc[100];
+
+int max(int x, int y){ return (x<=y)?y:x; }
+int min(int x, int y){ return (x<=y)?x:y; }
+int cmax(Zadanie Tab[], unsigned int rozmiar){
+    int pi[rozmiar];
+    unsigned int i,j; int t=0,u=0;
+    for (i=1;i<=rozmiar;i++){ 
+        j=pi[i];
+        t=max(t,Tab[j].r)+Tab[j].p;
+        u=max(u,t+Tab[j].q); 
+    }
+    return u;
+}
 
 istream& operator>> (istream& wejscie, Zadanie& zad){
     zad.kolejnosc = ++iIndexZadan;
@@ -93,7 +107,14 @@ void heapsort(Zadanie arr[], unsigned int N, int rpq){ //http://www.codecodex.co
     }  
 }
 
+void fdr(Zadanie Tab[], int arr[], unsigned int rozmiar){
+    heapsort(Tab,rozmiar,3);
 
+
+    for (unsigned int i = 0; i < rozmiar; i++){
+        arr[i] = Tab[i].kolejnosc;
+    }
+}
 
 int main(){
     unsigned int LiczbaZadan = 0, index = 0;
@@ -104,7 +125,7 @@ int main(){
     cin>>filename;
     cout<<"\n";
 
-    ifstream myfile (filename + ".in");
+    ifstream myfile ("dane."+filename);
     if (myfile.is_open()){
         while (getline (myfile,line) ){
             istringstream dane(line);
@@ -121,14 +142,16 @@ int main(){
         myfile.close();
     }else cout << "Unable to open file"; 
     // obsluga algorytmu, czyli petle zamieniajace kolejnosc dzialan
-    heapsort(TabZadan,LiczbaZadan,1);
+    fdr(TabZadan, kolejnosc, LiczbaZadan);
+    
     // wyswietlenie kolejnosci:
-    cout << endl<<"Wyliczona kolejnosc: ";
+    cout << endl << "Wyliczona kolejnosc: ";
     for (unsigned int i = 0; i < LiczbaZadan; i++){
         //cout << TabZadan[i];
-        cout << TabZadan[i].kolejnosc << " ";
+        cout << kolejnosc[i] << " ";
     }
     cout << endl;
-    
+    cout << "Cmax: " << cmax(TabZadan,LiczbaZadan)<< endl;
+
     return 0;
 }
