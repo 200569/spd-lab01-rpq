@@ -1,6 +1,9 @@
+#include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <cctype>
+#include <cstring>
 
 using namespace std;
 
@@ -15,15 +18,13 @@ struct Zadanie {
 Zadanie TabZadan[100]; //deklaracja tablicy zadan
 int kolejnosc[100];
 
-int max(int x, int y){ return (x<=y)?y:x; }
-int min(int x, int y){ return (x<=y)?x:y; }
+unsigned int max(unsigned int x, unsigned int y){ return (x<=y)?y:x; }
+unsigned int min(unsigned int x, unsigned int y){ return (x<=y)?x:y; }
 int cmax(Zadanie Tab[], unsigned int rozmiar){
-    int pi[rozmiar];
-    unsigned int i,j; int t=0,u=0;
-    for (i=1;i<=rozmiar;i++){ 
-        j=pi[i];
-        t=max(t,Tab[j].r)+Tab[j].p;
-        u=max(u,t+Tab[j].q); 
+    unsigned int i, t=0,u=0;
+    for (i=0;i<rozmiar;i++){
+        t=max(t,Tab[i].r)+Tab[i].p;
+        u=max(u,t+Tab[i].q);
     }
     return u;
 }
@@ -108,12 +109,11 @@ void heapsort(Zadanie arr[], unsigned int N, int rpq){ //http://www.codecodex.co
 }
 
 void fdr(Zadanie Tab[], int arr[], unsigned int rozmiar){
-    heapsort(Tab,rozmiar,3);
-
-
+    heapsort(Tab,rozmiar,1);
     for (unsigned int i = 0; i < rozmiar; i++){
         arr[i] = Tab[i].kolejnosc;
     }
+
 }
 
 int main(){
@@ -139,6 +139,7 @@ int main(){
                 index++;
             }
         }   
+        cout << "\n Odczytano plik z danymi.\n";
         myfile.close();
     }else cout << "Unable to open file"; 
     // obsluga algorytmu, czyli petle zamieniajace kolejnosc dzialan
@@ -150,8 +151,18 @@ int main(){
         //cout << TabZadan[i];
         cout << kolejnosc[i] << " ";
     }
-    cout << endl;
-    cout << "Cmax: " << cmax(TabZadan,LiczbaZadan)<< endl;
-
+    cout << endl << "Obliczanie Cmax: ";
+    int cm = cmax(TabZadan,LiczbaZadan);
+    cout << cm << endl;
+    // zapis do pliku
+    FILE *fp = fopen("out.txt","w");
+    if (fp){
+        fprintf(fp,"%d\n", cm);
+        fclose(fp);
+        cout << "Plik zostal zapisany.\n";
+    }else {
+        cout << "Nie moge otworzyc pliku " << filename << endl;
+        return -1;
+    }
     return 0;
 }
