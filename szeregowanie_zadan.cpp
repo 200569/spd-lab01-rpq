@@ -125,7 +125,7 @@ int main(){
     cin>>filename;
     cout<<"\n";
 
-    ifstream myfile ("dane."+filename);
+    ifstream myfile ("JACK"+filename+".DAT");
     if (myfile.is_open()){
         while (getline (myfile,line) ){
             istringstream dane(line);
